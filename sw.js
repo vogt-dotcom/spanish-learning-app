@@ -1,4 +1,4 @@
-const CACHE='dale-v1-20261123a';
+const CACHE='dale-v1-20261123b';
 const FILES=["./","./index.html","./styles.css","./data.js","./core.js","./app.js","./manifest.webmanifest","./assets/icon.svg","./assets/apple.svg","./assets/bread.svg","./assets/coffee.svg","./assets/water.svg","./assets/cheese.svg","./assets/fish.svg","./assets/house.svg","./assets/tree.svg","./assets/sun.svg","./assets/mountain.svg","./assets/bike.svg","./assets/train.svg","./assets/book.svg","./assets/key.svg","./assets/clock.svg","./assets/flower.svg","./assets/table.svg","./assets/chair.svg"];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)));});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('dale-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});

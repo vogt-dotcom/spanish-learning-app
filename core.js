@@ -18,7 +18,9 @@ function chooseTerms(terms,records,limit=10,now=Date.now()){
 }
 function makeQuestion(term,all,kind='single'){
  if(kind==='typing')return {type:'typing',prompt:'Write the Spanish for',hint:term.en,term,answerText:term.es,explanation:term.example||term.en};
- const peers=all.filter(t=>t.id!==term.id&&t.en!==term.en);
+ const candidates=all.filter(t=>t.id!==term.id&&t.en!==term.en);
+ const related=candidates.filter(t=>t.category===term.category&&(kind!=='picture'||t.image));
+ const peers=related.length>=3?related:candidates;
  const distractors=shuffle(peers).filter((t,i,a)=>a.findIndex(x=>x.en===t.en)===i).slice(0,3);
  const picture=kind==='picture'&&term.image;
  let options=shuffle([term,...distractors]).map(t=>picture?t.es:t.en);

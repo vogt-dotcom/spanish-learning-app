@@ -20,6 +20,8 @@ assert.equal(C.streak({'2026-11-20':5},'2026-11-23'),0);
 const chosen=C.chooseTerms(D.terms,{'g-1':{due:0},'g-2':{due:99999999}},2,100);
 assert.equal(chosen[0].id,'g-1');
 for(let i=0;i<100;i++){const q=C.makeQuestion(D.terms[i],D.terms);assert.equal(new Set(q.options).size,4);assert.equal(q.options[q.answer[0]],D.terms[i].en);const m=C.makeMulti(D.terms);assert.equal(m.answer.length,2);assert.equal(m.options.length,4);}
+const picture=C.makeQuestion(D.terms.find(t=>t.image),D.terms,'picture');
+assert.ok(picture.options.every(o=>D.terms.some(t=>t.image&&t.es===o)));
 const ids=new Set(D.terms.map(t=>t.id));const good={version:1,records:{},days:{'2026-11-23':5},favorites:['g-1','deleted'],xp:50,goal:10};
 assert.equal(C.validateProgress(good,ids).favorites.length,1);
 assert.throws(()=>C.validateProgress({...good,xp:-1},ids));
